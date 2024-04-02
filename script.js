@@ -1,4 +1,4 @@
-function getComputerChoice () {
+function getComputerChoice() {
     //Generates a random number between 1-3 (inclusive)
     let randomNum = Math.floor((Math.random() * 3) + 1);
     let computerChoice;
@@ -47,3 +47,39 @@ function playRound(computerSelection, playerSelection) {
 
     return result;
 }
+
+function playGame() {
+    let playerSelection;
+    let computerSelection;
+    let result;
+    let winCount = 0;
+    let loseCount = 0;
+
+    for(let i = 0; i < 5; i++) {
+        playerSelection = prompt("Enter choice of Rock, Paper, or Scissors: ");
+        computerSelection = getComputerChoice();
+        result = playRound(computerSelection, playerSelection);
+        console.log(result);
+        if (result.includes("win")) {
+            winCount++;
+        }
+        else if (result.includes("lose")) {
+            loseCount++;
+        }
+    }
+
+    if (winCount > loseCount) {
+        console.log("You win! Your final score is " + winCount);
+        console.log("The computer's final score is " + loseCount);
+    }
+    else if(winCount === loseCount) {
+        console.log("Draw! Your final score is " + winCount);
+        console.log("The computer's final score is " + loseCount);
+    }
+    else {
+        console.log("You lose! Your final score is " + winCount);
+        console.log("The computer's final score is " + loseCount);
+    }
+}
+
+playGame();
