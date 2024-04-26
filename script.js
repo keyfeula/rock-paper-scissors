@@ -55,19 +55,6 @@ function playGame() {
     let winCount = 0;
     let loseCount = 0;
 
-    for(let i = 0; i < 5; i++) {
-        playerSelection = prompt("Enter choice of Rock, Paper, or Scissors: ");
-        computerSelection = getComputerChoice();
-        result = playRound(computerSelection, playerSelection);
-        console.log(result);
-        if (result.includes("win")) {
-            winCount++;
-        }
-        else if (result.includes("lose")) {
-            loseCount++;
-        }
-    }
-
     if (winCount > loseCount) {
         console.log("You win! Your final score is " + winCount);
         console.log("The computer's final score is " + loseCount);
