@@ -1,3 +1,32 @@
+let playerScore = 0;
+let computerScore = 0;
+
+const div = document.querySelector("#container");
+const resultDiv = document.querySelector(".result");
+
+div.addEventListener("click", (event) => {
+    if (event.target.tagName === "BUTTON") {
+        const buttonID = event.target.id;
+        let playerSelection;
+        let computerSelection = getComputerChoice();
+        let roundResult;
+
+        switch (buttonID) {
+            case "rockBtn":
+                playerSelection = "Rock";
+                break;
+            case "paperBtn":
+                playerSelection = "Paper";
+                break;
+            case "scissorsBtn":
+                playerSelection = "Scissors";
+                break;
+        }
+        roundResult = playRound(computerSelection, playerSelection);
+        resultDiv.innerText = roundResult;
+    }
+})
+
 function getComputerChoice() {
     //Generates a random number between 1-3 (inclusive)
     let randomNum = Math.floor((Math.random() * 3) + 1);
@@ -18,55 +47,65 @@ function getComputerChoice() {
 }
 
 function playRound(computerSelection, playerSelection) {
-    //Format player selection string to match the computer selection string
-    playerSelection = playerSelection.at(0).toUpperCase() + playerSelection.substring(1).toLowerCase();
     let result;
 
     //Determine result of round based on player choice vs computer choice
     if (playerSelection === computerSelection) {
-        result = "Draw!";
+        result = `Draw!
+        Player Score: ${playerScore}
+        Computer Score: ${computerScore}`;
     }
     else if (playerSelection === "Rock" && computerSelection === "Scissors") {
-        result = "You win! Rock beats Scissors";
+        result = `You win! Rock beats Scissors
+        Player Score: ${++playerScore}
+        Computer Score: ${computerScore}`;
     }
     else if (playerSelection === "Rock" && computerSelection === "Paper") {
-        result = "You lose! Paper beats Rock";
+        result = `You lose! Paper beats Rock 
+        Player Score: ${playerScore}
+        Computer Score: ${++computerScore}`;
     }
     else if (playerSelection === "Scissors" && computerSelection === "Paper") {
-        result = "You win! Scissors beats Paper";
+        result = `You win! Scissors beats Paper 
+        Player Score: ${++playerScore}
+        Computer Score: ${computerScore}`;
     }
     else if (playerSelection === "Scissors" && computerSelection === "Rock") {
-        result = "You lose! Rock beats Scissors";
+        result = `You lose! Rock beats Scissors 
+        Player Score: ${playerScore}
+        Computer Score: ${++computerScore}`;
     }
     else if (playerSelection === "Paper" && computerSelection === "Rock") {
-        result = "You win! Paper beats Rock";
+        result = `You win! Paper beats Rock
+        Player Score: ${++playerScore}
+        Computer Score: ${computerScore}`;
     }
     else if (playerSelection === "Paper" && computerSelection === "Scissors") {
-        result = "You lose! Scissors beats Paper";
+        result = `You lose! Scissors beats Paper
+        Player Score: ${playerScore}
+        Computer Score: ${++computerScore}`;
+    }
+
+    if (playerScore === 5 || computerScore === 5) {
+        result = gameOver();
     }
 
     return result;
 }
 
-function playGame() {
-    let playerSelection;
-    let computerSelection;
-    let result;
-    let winCount = 0;
-    let loseCount = 0;
-
-    if (winCount > loseCount) {
-        console.log("You win! Your final score is " + winCount);
-        console.log("The computer's final score is " + loseCount);
-    }
-    else if(winCount === loseCount) {
-        console.log("Draw! Your final score is " + winCount);
-        console.log("The computer's final score is " + loseCount);
+function gameOver() {
+    let gameOverMsg;
+    if (playerScore > computerScore) {
+        gameOverMsg = `You win! Your final score is: ${playerScore} 
+        The computer's final score is: ${computerScore}`;
     }
     else {
-        console.log("You lose! Your final score is " + winCount);
-        console.log("The computer's final score is " + loseCount);
+        gameOverMsg = `You lose! Your final score is: ${playerScore} 
+        The computer's final score is: ${computerScore}`;
     }
-}
 
-playGame();
+    playerScore = 0;
+    computerScore = 0;
+
+    return gameOverMsg;
+}
